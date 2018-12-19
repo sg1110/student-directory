@@ -40,7 +40,7 @@ def input_students
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   while !name.empty? do
-    @students << {name: name, cohort: :november}
+  student_array_input(name)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
@@ -86,7 +86,7 @@ def load_students (filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    student_array_input(name,cohort)
   end
   file.close
 end
@@ -104,6 +104,9 @@ def try_load_students
   end
 end
 
+def student_array_input(name, cohort = "november")
+  @students << {name: name, cohort: cohort.to_sym}
+end
 
 try_load_students
 interactive_menu
