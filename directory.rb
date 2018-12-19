@@ -4,7 +4,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Load the student list from students.csv"
+  puts "4. Please choose a file you wish to load a student list from"
   puts "9. Exit"
 end
 
@@ -26,7 +26,7 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      load_students
+      choose_file #need to change to any file can be loaded
     when "9"
       exit
     else
@@ -95,22 +95,28 @@ def load_students (filename = "students.csv")
 end
 
 
-def try_load_students
-  filename = ARGV.first
+def try_load_students(filename)
   return if filename.nil?
   if File.exists?(filename)
     load_students(filename)
       puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Sorry #{filename} doesn't exist"
-    exit
   end
 end
+
+
+def choose_file
+  puts "Please specify a list you wish to load information from"
+  filename = STDIN.gets.chomp
+  try_load_students(filename)
+end
+
 
 def student_array_input(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-try_load_students
+
 #load_students
 interactive_menu
