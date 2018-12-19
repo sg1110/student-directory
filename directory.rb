@@ -84,13 +84,14 @@ end
 
 
 def load_students (filename = "students.csv")
+  @students = [] if @students.any?
   file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    student_array_input(name,cohort)
-  end
-  file.close
-  puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      student_array_input(name,cohort)
+    end
+    file.close
+    puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
 end
 
 
