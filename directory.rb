@@ -108,5 +108,5 @@ def student_array_input(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-try_load_students
+load_students
 interactive_menu
