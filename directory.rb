@@ -79,6 +79,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Previously entered student names have been succesfully saved."
 end
 
 
@@ -89,6 +90,7 @@ def load_students (filename = "students.csv")
     student_array_input(name,cohort)
   end
   file.close
+  puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
 end
 
 
@@ -108,5 +110,6 @@ def student_array_input(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-load_students
+try_load_students
+#load_students
 interactive_menu
