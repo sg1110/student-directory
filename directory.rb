@@ -7,6 +7,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Please choose a file you wish to load a student list from"
+  puts "5. Read source code"
   puts "9. Exit"
 end
 
@@ -29,6 +30,8 @@ def process(selection)
       save_students
     when "4"
       choose_file
+    when "5"
+      read_source_code
     when "9"
       exit
     else
@@ -93,14 +96,11 @@ def load_students (filename = "students.csv")
   puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
 end
 
-  #file = File.open(filename, "r") do |f|
-  # f.readlines.each do |line|
-# name, cohort = line.chomp.split(',')
-    #  student_array_input(name,cohort)
 
 def student_array_input(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
 end
+
 
 def try_load_students(filename)
   return if filename.nil?
@@ -120,6 +120,8 @@ def choose_file
 end
 
 
-
+def read_source_code
+  $><<IO.read($0)
+end
 
 interactive_menu
