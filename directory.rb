@@ -26,7 +26,7 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      choose_file #need to change to any file can be loaded
+      choose_file
     when "9"
       exit
     else
@@ -45,6 +45,7 @@ def input_students
     name = STDIN.gets.chomp
   end
 end
+
 
 def show_students
   print_header
@@ -72,25 +73,25 @@ end
 
 
 def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  file = File.open("students.csv", "w") do |f|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Previously entered student names have been succesfully saved."
 end
 
 
 def load_students (filename = "students.csv")
   @students = [] if @students.any?
-  file = File.open(filename, "r")
-    file.readlines.each do |line|
+  file = File.open(filename, "r") do |f|
+    f.readlines.each do |line|
       name, cohort = line.chomp.split(',')
       student_array_input(name,cohort)
     end
-    file.close
+  end
     puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
 end
 
@@ -117,6 +118,4 @@ def student_array_input(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-
-#load_students
 interactive_menu
