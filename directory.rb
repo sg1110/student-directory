@@ -1,5 +1,7 @@
 @students = []
 
+require 'csv'
+
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -73,11 +75,9 @@ end
 
 
 def save_students
-  file = File.open("students.csv", "w") do |f|
+  CSV.open("students.csv", "w") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << [student[:name], student[:cohort]]
     end
   end
   puts "Previously entered student names have been succesfully saved."
@@ -86,15 +86,21 @@ end
 
 def load_students (filename = "students.csv")
   @students = [] if @students.any?
-  file = File.open(filename, "r") do |f|
-    f.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      student_array_input(name,cohort)
-    end
+  CSV.foreach(filename) do |row|
+    name, cohort = row
+    student_array_input(name,cohort)
   end
-    puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
+  puts "Student names from students.csv have been succesfully loaded. Please proceed to option 2 if you wish to see the list."
 end
 
+  #file = File.open(filename, "r") do |f|
+  # f.readlines.each do |line|
+# name, cohort = line.chomp.split(',')
+    #  student_array_input(name,cohort)
+
+def student_array_input(name, cohort = "november")
+  @students << {name: name, cohort: cohort.to_sym}
+end
 
 def try_load_students(filename)
   return if filename.nil?
@@ -114,8 +120,6 @@ def choose_file
 end
 
 
-def student_array_input(name, cohort = "november")
-  @students << {name: name, cohort: cohort.to_sym}
-end
+
 
 interactive_menu
